@@ -1,0 +1,25 @@
+services:
+  mongo_db:
+    container_name: easy-pass-db
+    image: mongo:latest
+    restart: always
+    volumes:
+      - mongo_db:/data/db
+
+  nodejs_app:
+    container_name: easy-pass-be
+    build: .
+    restart: always
+    ports:
+      - 3000:3000
+    depends_on:
+      - mongo_db
+    environment:
+      DATABASE_URL: mongodb://mongo_db:27017/easy-pass
+      SILENT_LEVEL: 2
+      SECRET_IV: fEpmO/i3Twm5nPJgz+sJdA== # 16 bytes key
+      SECRET_KEY: pBgdKcSlRaUShxR2GyX+GQ== # recommended 16-32 bytes key
+      SECRET_PHRASE: hZniWqKQ/UC6ZiOhxhHl0vByWf/0WMtcfg/YUXiJEHo= # 32 bytes key
+
+volumes:
+  mongo_db: {}

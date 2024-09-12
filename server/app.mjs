@@ -1,13 +1,13 @@
 import express from "express";
 import dotenv from "dotenv";
 
-import mongoose from "../db/mongoose.mjs";
+import mongoose from "./db/mongoose.mjs";
 
 import { logger } from "./utils/logger.mjs";
 import { checks } from "./utils/checks.mjs";
 import { handleError } from "./utils/error-handler.mjs";
 import { DEFAULT_PORT } from "./utils/consts.mjs";
-import { validateConnect } from "../middleware/password.mjs";
+import { validateConnect } from "./middleware/password.mjs";
 import { router as passwordRoutes } from "./routes/password.mjs";
 
 dotenv.config();

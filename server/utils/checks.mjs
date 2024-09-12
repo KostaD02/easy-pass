@@ -21,7 +21,7 @@ export function checks() {
   if (!process.env.SECRET_PHRASE) {
     logger("Secret phrase is not set", "error", true);
     logger(
-      `You could use similar secret key: ${crypto
+      `You could use similar secret phrase: ${crypto
         .randomBytes(32)
         .toString("base64")}`,
       "suggestion",
