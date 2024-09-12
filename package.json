@@ -1,0 +1,21 @@
+{
+  "name": "easy-pass",
+  "version": "1.0.0",
+  "description": "Easy self-hosting password manager",
+  "main": "app.mjs",
+  "scripts": {
+    "start": "node app.mjs",
+    "start:dev": "nodemon app.mjs"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.21.0",
+    "mongoose": "^8.6.2"
+  },
+  "devDependencies": {
+    "dotenv": "^16.4.5",
+    "nodemon": "^3.1.4"
+  }
+}
