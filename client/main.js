@@ -291,9 +291,23 @@ function toggleEye(target, password) {
   }
 }
 
-function copy(text) {
-  navigator.clipboard.writeText(text);
-  displayToast("Password copied", "success", "green");
+async function copy(text) {
+  try {
+    navigator.clipboard.writeText(text);
+    displayToast("Password copied", "success", "green");
+  } catch (error) {
+    // Since clipboard API is not supported in some browsers/http
+    // will use old method to copy text
+    const textarea = document.createElement("textarea");
+    textarea.value = text;
+    textarea.style.opacity = 0;
+    textarea.style.position = "absolute";
+    document.body.appendChild(textarea);
+    textarea.select();
+    document.execCommand("copy");
+    document.body.removeChild(textarea);
+    displayToast("Password copied", "success", "green");
+  }
 }
 
 async function edit(id, target) {
