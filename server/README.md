@@ -35,8 +35,8 @@ Either run docker container or run script manually:
 ### Container
 
 ```
-docker pull kostad02/easy-pass
-docker compose -p -t
+docker pull kostad02/easy-pass:latest
+docker compose up -d
 ```
 
 ### Manual
@@ -44,11 +44,13 @@ docker compose -p -t
 For production:
 
 ```
+npm i
 npm start
 ```
 
 For testing (live refresh):
 
 ```
+npm i
 npm run start:dev
 ```

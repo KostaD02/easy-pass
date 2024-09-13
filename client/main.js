@@ -162,7 +162,7 @@ function getSecret() {
 async function inputSecret() {
   const { value: secret } = await Swal.fire({
     title: "Input secret key",
-    input: "text",
+    input: "password",
     inputLabel: "Your SECRET_KEY",
     inputPlaceholder: "Enter your secret key from env",
   });
@@ -250,36 +250,26 @@ function showPassowrds() {
 }
 
 function getTrVisual(data, index) {
+  // prettier-ignore
   return `
     <tr>
       <th scope="col">${index + 1}</th>
       <td class="title">${data.title}</td>
-      <td class="url">${
-        data.url
-          ? `<a target="_blank" href="${data.url}">${data.url}</a>`
-          : "nothing"
-      }</td>
-      <td class="pass" data-pass="${data.password}">${data.password
-    .split("")
-    .map(() => "•")
-    .join("")}</td>
+      <td class="url">${data.url ? `<a target="_blank" href="${data.url}">${data.url}</a>`: "nothing"}</td>
+      <td class="pass" data-pass="${data.password}">
+        ${data.password
+          .split("")
+          .map(() => "•")
+          .join("")
+        }
+      </td>
       <td>
         <div class="d-flex justify-contetn-center align-items-center gap-3">
-          <button class="btn btn-primary" onclick="toggleEye(this, '${
-            data.password
-          }')">Show</button>
-          <button class="btn btn-success" onclick="copy('${
-            data.password
-          }')">Copy</button>
-          <button class="btn btn-warning" onclick="refershPassword('${
-            data._id
-          }', this)">Refresh</button>
-          <button class="btn btn-warning" onclick="onclick="edit('${
-            data._id
-          }', this)"">Edit</button>
-          <button class="btn btn-danger" onclick="deletePassword('${
-            data._id
-          }', this)">Delete</button>
+          <button class="btn btn-primary" onclick="toggleEye(this, '${data.password}')">Show</button>
+          <button class="btn btn-success" onclick="copy('${data.password}')">Copy</button>
+          <button class="btn btn-warning" onclick="refershPassword('${data._id}', this)">Refresh</button>
+          <button class="btn btn-warning" onclick="edit('${data._id}', this)">Edit</button>
+          <button class="btn btn-danger" onclick="deletePassword('${data._id}', this)">Delete</button>
         </div>
       </td>
     </tr>
@@ -360,11 +350,13 @@ async function edit(id, target) {
         );
       })
       .catch((error) => {
-        Swal.fire({
-          title: "Error!",
-          text: error.error,
-          icon: "error",
-        });
+        if (error.error !== "Nothing to update") {
+          Swal.fire({
+            title: "Error!",
+            text: error.error,
+            icon: "error",
+          });
+        }
       });
   }
 }

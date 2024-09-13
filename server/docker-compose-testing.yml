@@ -8,7 +8,7 @@ services:
 
   nodejs_app:
     container_name: easy-pass
-    build: . # swap this line with image: easy-pass
+    build: . # swap this line with image: kostad02/easy-pass:latest
     restart: always
     ports:
       - 3000:3000

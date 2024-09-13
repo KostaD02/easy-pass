@@ -1,10 +1,7 @@
 # Easy pass
 
 Easy pass is self-hosting app for password managment.
-There are many great inspirations [vaultwarden](https://www.vaultwarden.net/), [passbolt](https://www.passbolt.com/), [bitwarden](https://bitwarden.com/) and others.
-
-But i was strugling to self-host them by myself, because of configurate https 😂.
-Because of that created **easy-pass**, idea is simple to have self-hosted password manager without https configuration, reverse proxy and similar things.
+There are many great inspirations [vaultwarden](https://www.vaultwarden.net/), [passbolt](https://www.passbolt.com/), [bitwarden](https://bitwarden.com/) and others but i was strugling to self-host them by myself, because of configurate https 😂 Because of that created **easy-pass**, idea is simple to have self-hosted password manager without https configuration, reverse proxy and similar things.
 
 > [!TIP]
 > I suggset to learn how to setup https because it's more secure context than just http.
@@ -104,8 +101,8 @@ You should see 2 container:
 
 ```
 CONTAINER ID   IMAGE                                                COMMAND                  CREATED          STATUS                  PORTS                                                 NAMES
-c90bbd620142   kostad02/easy-pass:latest                            "docker-entrypoint.s…"   17 seconds ago   Up 17 seconds           0.0.0.0:3000->3000/tcp, :::3000->3000/tcp             easy-pass
-e064d2eee39f   mongo:latest                                         "docker-entrypoint.s…"   17 seconds ago   Up 17 seconds           27017/tcp                                             easy-pass-db
+c90bbd620142   kostad02/easy-pass:latest                            "docker-entrypoint.s…"   22 seconds ago   Up 22 seconds           0.0.0.0:3000->3000/tcp, :::3000->3000/tcp             easy-pass
+e064d2eee39f   mongo:latest                                         "docker-entrypoint.s…"   22 seconds ago   Up 22 seconds           27017/tcp                                             easy-pass-db
 ```
 
 Open browser and write your `http://your_localhost_ip:3000`.
@@ -124,7 +121,7 @@ Here is few idea which will be implemented in future, you could open issue for t
 
 - Update client side design.
 - Seperate client side from server side:
-  - Create new PWA application (for better experience with mobile).
+  - Create new PWA application (for better experience).
   - Create container for new application
 - Add backup support.
 - Minify client side code dynamicly in `server/index.html`.
