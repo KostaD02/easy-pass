@@ -18,10 +18,6 @@ const passwordSchema = new mongoose.Schema({
     trim: true,
     default: null,
   },
-  icon: {
-    type: Boolean,
-    default: false,
-  },
 });
 
 export const Password = mongoose.model("Password", passwordSchema);

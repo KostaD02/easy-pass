@@ -21,12 +21,17 @@ Client side sends request to Server, which will generate random password based, 
 Unfortunately can't build everything from scratch, here is all dependencies:
 
 - Client side:
-  - TODO: fill
+  - [Boostrap CSS](https://getbootstrap.com/)
+  - [SweetAlert2](https://sweetalert2.github.io/)
 - Server side:
   - [Express js](https://expressjs.com/)
   - [Mongoose](https://mongoosejs.com/)
   - [dotenv](https://www.npmjs.com/package/dotenv)
   - [nodemon](https://www.npmjs.com/package/nodemon) - Not used in code but usefull for developing.
+
+All dependencies are required to installed only once for server side, after that you can use it without internet. For client side SweetAlert2 is injected with minified code but bootstrap css not, if you go offline with client side, it could work but you will miss some styles from boostrap 😢
+
+In future will update client side code to have **zero** dependencies with better UI/UX.
 
 ## Environment variables
 
@@ -40,7 +45,7 @@ Unfortunately can't build everything from scratch, here is all dependencies:
 | SECRET_IV     | Secret [IV](https://csrc.nist.gov/glossary/term/initialization_vector) which will be used for encrypt/decrypt | `string` | Something strong, exactly 16 character | nothing |
 
 > [!TIP]
-> For secrets you could use node.js `crypto` built in function: `crypto.randomBytes(12).toString('base64')`
+> For secrets you could use node.js `crypto` built in function: `crypto.randomBytes(16).toString('base64')`
 
 ### Example env
 
@@ -65,8 +70,60 @@ Silent level is used to display `console` outputs. Some of logs are forced to se
 
 ## How to setup
 
-TODO: fill
+You have to install [docker](https://www.docker.com/) and [docker compose](https://docs.docker.com/compose/).
+
+After that run this scripts:
+
+```
+mkdir easy-pass
+cd easy-pass
+docker pull kostad02/easy-pass:latest
+curl -o docker-compose.yml https://raw.githubusercontent.com/KostaD02/easy-pass/main/server/docker-compose.yml
+```
+
+> [!CAUTION]
+> It's better to edit secret values than using "default" ones.
+
+```
+nano docker-compose.yml # edit all secret codes accordingly.
+```
+
+After updating secret values
+
+```
+docker compose up -d
+```
+
+Thats it! Now lets check if container is running:
+
+```
+docker ps
+```
+
+You should see 2 container:
+
+```
+CONTAINER ID   IMAGE                                                COMMAND                  CREATED          STATUS                  PORTS                                                 NAMES
+c90bbd620142   kostad02/easy-pass:latest                            "docker-entrypoint.s…"   17 seconds ago   Up 17 seconds           0.0.0.0:3000->3000/tcp, :::3000->3000/tcp             easy-pass
+e064d2eee39f   mongo:latest                                         "docker-entrypoint.s…"   17 seconds ago   Up 17 seconds           27017/tcp                                             easy-pass-db
+```
+
+Open browser and write your `http://your_localhost_ip:3000`.
+
+![Example of easy-pass](view.png)
+
+Input same `SECRET_KEY` what you wrote in `docker-compose.yml`.
 
 ## How to contribute
 
-TODO: fill
+Currently server side code is working perfectly but about client side can't say same. I will add new features when I have time, but you don't have to wait - add them yourself! Fork it and submit pull requests.
+
+## To Do
+
+Here is few idea which will be implemented in future, you could open issue for that as well.
+
+- Update client side design.
+- Seperate client side from server side:
+  - Create new PWA application (for better experience with mobile).
+  - Create container for new application
+- Add backup support.

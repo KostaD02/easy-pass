@@ -7,10 +7,20 @@
     "start": "node app.mjs",
     "start:dev": "nodemon app.mjs"
   },
-  "keywords": [],
-  "author": "",
-  "license": "ISC",
+  "author": "Konstantine Datunishvili",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/KostaD02/easy-pass/issues"
+  },
+  "contributors": [
+    {
+      "name": "Konstantine Datunishvili",
+      "email": "konstantine@datunishvili.ge",
+      "url": "https://konstantinedatunishvili.com"
+    }
+  ],
   "dependencies": {
+    "cors": "^2.8.5",
     "express": "^4.21.0",
     "mongoose": "^8.6.2"
   },

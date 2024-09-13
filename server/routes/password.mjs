@@ -8,6 +8,7 @@ import {
 import { handleError } from "../utils/error-handler.mjs";
 import { HEADERS, DEFAULT_PASSOWRD_MINIMUM_LENGTH } from "../utils/consts.mjs";
 import { validMongooseId } from "../middleware/mongoose.mjs";
+import { validateConnect } from "../middleware/password.mjs";
 
 const router = express.Router();
 
@@ -21,15 +22,15 @@ router.get("/all", async (req, res) => {
   return res.json(result);
 });
 
-router.get("/random", (req, res) => {
+router.get("/random", validateConnect, (req, res) => {
   const length = req.headers[HEADERS.length] || DEFAULT_PASSOWRD_MINIMUM_LENGTH;
   return res.json({
     password: generateRandomPassword(length),
   });
 });
 
-router.post("/create", async (req, res) => {
-  const { title, url, icon } = req.body;
+router.post("/create", validateConnect, async (req, res) => {
+  const { title, url } = req.body;
 
   const isDuplicated = await Password.exists({ title });
 
@@ -45,12 +46,6 @@ router.post("/create", async (req, res) => {
     });
   }
 
-  if (typeof icon !== "boolean") {
-    return res.status(400).json({
-      error: "Icon should be a boolean",
-    });
-  }
-
   try {
     const randomPassword = generateRandomPassword(
       DEFAULT_PASSOWRD_MINIMUM_LENGTH
@@ -58,13 +53,13 @@ router.post("/create", async (req, res) => {
     const encryptedPassword = encrypt(randomPassword, process.env.SECRET_KEY);
     const model = new Password({
       url,
-      icon,
       title,
       password: encryptedPassword,
     });
     model
       .save()
       .then((result) => {
+        result.password = decrypt(result.password);
         res.json(result);
       })
       .catch((error) => {
@@ -75,7 +70,7 @@ router.post("/create", async (req, res) => {
   }
 });
 
-router.get("/id/:id", validMongooseId, async (req, res) => {
+router.get("/id/:id", validateConnect, validMongooseId, async (req, res) => {
   const exists = await Password.exists({ _id: req.params.id });
 
   if (!exists) {
@@ -87,8 +82,8 @@ router.get("/id/:id", validMongooseId, async (req, res) => {
   return res.json(await Password.findById(req.params.id));
 });
 
-router.patch("/id/:id", validMongooseId, async (req, res) => {
-  const { title, url, icon, updatePassword } = req.body;
+router.patch("/id/:id", validateConnect, validMongooseId, async (req, res) => {
+  const { title, url, updatePassword } = req.body;
   const updated = {};
 
   const exists = await Password.exists({ _id: req.params.id });
@@ -99,7 +94,7 @@ router.patch("/id/:id", validMongooseId, async (req, res) => {
     });
   }
 
-  if (!title && !url && !icon) {
+  if (!title && !url && !updatePassword) {
     return res.status(400).json({
       error: "Nothing to update",
     });
@@ -127,16 +122,6 @@ router.patch("/id/:id", validMongooseId, async (req, res) => {
     updated.url = url;
   }
 
-  if (icon) {
-    if (typeof icon !== "boolean") {
-      return res.status(400).json({
-        error: "Icon should be a boolean",
-      });
-    }
-
-    updated.icon = icon;
-  }
-
   if (updatePassword) {
     const randomPassword = generateRandomPassword(
       DEFAULT_PASSOWRD_MINIMUM_LENGTH
@@ -149,13 +134,14 @@ router.patch("/id/:id", validMongooseId, async (req, res) => {
     const result = await Password.findByIdAndUpdate(req.params.id, updated, {
       new: true,
     });
+    result.password = decrypt(result.password);
     return res.json(result);
   } catch (error) {
     return handleError(error, res);
   }
 });
 
-router.delete("/id/:id", validMongooseId, (req, res) => {
+router.delete("/id/:id", validateConnect, validMongooseId, (req, res) => {
   Password.findByIdAndDelete(req.params.id)
     .then((result) => {
       if (result === null) {
@@ -170,7 +156,7 @@ router.delete("/id/:id", validMongooseId, (req, res) => {
     });
 });
 
-router.delete("/all", (req, res) => {
+router.delete("/all", validateConnect, (req, res) => {
   Password.deleteMany({})
     .then((result) => {
       return res.json(result);

@@ -8,17 +8,15 @@ services:
 
   nodejs_app:
     container_name: easy-pass
-    image: kostad02/easy-pass:latest
+    build: . # swap this line with image: easy-pass
     restart: always
     ports:
       - 3000:3000
     depends_on:
       - mongo_db
     environment:
-      PORT: 3000 # match the ports
       DATABASE_URL: mongodb://mongo_db:27017/easy-pass
-      SILENT_LEVEL: 2 # Check the README.md for more information
-      # These keys are already used, generate new ones!
+      SILENT_LEVEL: 2
       SECRET_IV: fEpmO/i3Twm5nPJgz+sJdA== # 16 bytes key
       SECRET_KEY: pBgdKcSlRaUShxR2GyX+GQ== # recommended 16-32 bytes key
       SECRET_PHRASE: hZniWqKQ/UC6ZiOhxhHl0vByWf/0WMtcfg/YUXiJEHo= # 32 bytes key

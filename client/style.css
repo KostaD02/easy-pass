@@ -1,0 +1,25 @@
+.max-width-800 {
+  max-width: 800px;
+}
+
+.max-width-400 {
+  max-width: 400px;
+}
+
+.bi {
+  cursor: pointer;
+  transition: 0.5s ease;
+}
+
+.bi:hover {
+  color: var(--bs-primary);
+}
+
+.navbar-brand {
+  color: var(--bs-primary);
+}
+
+.table-responsive {
+  max-width: 100%;
+  overflow-x: auto;
+}
