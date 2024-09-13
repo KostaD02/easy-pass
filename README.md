@@ -127,3 +127,4 @@ Here is few idea which will be implemented in future, you could open issue for t
   - Create new PWA application (for better experience with mobile).
   - Create container for new application
 - Add backup support.
+- Minify client side code dynamicly in `server/index.html`.
