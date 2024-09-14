@@ -1,21 +1,21 @@
 # Easy pass
 
 Easy pass is self-hosting app for password managment.
-There are many great inspirations [vaultwarden](https://www.vaultwarden.net/), [passbolt](https://www.passbolt.com/), [bitwarden](https://bitwarden.com/) and others but i was strugling to self-host them by myself, because of configurate https 😂 Because of that created **easy-pass**, idea is simple to have self-hosted password manager without https configuration, reverse proxy and similar things.
+There are many great inspirations [vaultwarden](https://www.vaultwarden.net/), [passbolt](https://www.passbolt.com/), [bitwarden](https://bitwarden.com/), and others, but I struggled to self-host them myself due to the complexity of configuring HTTPS. 😂 Because of that, I created **Easy Pass**. The idea is simple: to have a self-hosted password manager without the need for HTTPS configuration, reverse proxies, or similar setups.
 
 > [!TIP]
-> I suggset to learn how to setup https because it's more secure context than just http.
+> I suggest learning how to set up HTTPS because it's more secure than just using HTTP.
 
 ## How does it works?
 
-Client side sends request to Server, which will generate random password based, will encrypt it with `aes-256-cbc` algorithm, where will be used `SECRET_PHRASE` and `SECRET_IV`.
+The client-side sends a request to the server, which will generate a random password. The server will encrypt it using the `aes-256-cbc` algorithm, with `SECRET_PHRASE` and `SECRET_IV` being used for encryption.
 
 > [!IMPORTANT]
-> For security reasons each request from client needs `X-Secret`. it should be matched `SECRET_KEY` value, otherwise it will not work.
+> For security reasons, each request from the client needs an `X-Secret` header. This should match the `SECRET_KEY` value; otherwise, it will not work.
 
 ## Dependencies
 
-Unfortunately can't build everything from scratch, here is all dependencies:
+Unfortunately, I can't build everything from scratch, so here are all the dependencies:
 
 - Client side:
   - [Boostrap CSS](https://getbootstrap.com/)
@@ -26,9 +26,9 @@ Unfortunately can't build everything from scratch, here is all dependencies:
   - [dotenv](https://www.npmjs.com/package/dotenv)
   - [nodemon](https://www.npmjs.com/package/nodemon) - Not used in code but usefull for developing.
 
-All dependencies are required to installed only once for server side, after that you can use it without internet. For client side SweetAlert2 is injected with minified code but bootstrap css not, if you go offline with client side, it could work but you will miss some styles from boostrap 😢
+All dependencies are required to be installed only once on the server side. After that, you can use it without the internet. On the client side, SweetAlert2 is included with minified code, but Bootstrap CSS is not. If you go offline on the client side, it will still work, but you'll miss some styles from Bootstrap. 😢
 
-In future will update client side code to have **zero** dependencies with better UI/UX.
+In the future, I will update the client-side code to have **zero** dependencies and a better UI/UX.
 
 ## Environment variables
 
@@ -42,7 +42,7 @@ In future will update client side code to have **zero** dependencies with better
 | SECRET_IV     | Secret [IV](https://csrc.nist.gov/glossary/term/initialization_vector) which will be used for encrypt/decrypt | `string` | Something strong, exactly 16 character | nothing |
 
 > [!TIP]
-> For secrets you could use node.js `crypto` built in function: `crypto.randomBytes(16).toString('base64')`
+> For secrets, you can use Node.js's built-in `crypto` function: `crypto.randomBytes(16).toString('base64')`.
 
 ### Example env
 
@@ -57,7 +57,7 @@ SECRET_PHRASE = PsKA53DqytgX6nlGDuEK8zqjlnZP/nurfBm7tnsXg3s=
 
 ## Silent level
 
-Silent level is used to display `console` outputs. Some of logs are forced to see exact reason why application stopped.
+The silent level is used to control the display of `console` outputs. Some logs are forced to be visible to understand the exact reason why the application stopped.
 
 | level | description                |
 | ----- | -------------------------- |
@@ -79,7 +79,7 @@ curl -o docker-compose.yml https://raw.githubusercontent.com/KostaD02/easy-pass/
 ```
 
 > [!CAUTION]
-> It's better to edit secret values than using "default" ones.
+> It's better to edit secret values rather than using the "default" ones.
 
 ```
 nano docker-compose.yml # edit all secret codes accordingly.
@@ -113,11 +113,11 @@ Input same `SECRET_KEY` what you wrote in `docker-compose.yml`.
 
 ## How to contribute
 
-Currently server side code is working perfectly but about client side can't say same. I will add new features when I have time, but you don't have to wait - add them yourself! Fork it and submit pull requests.
+Currently, the server-side code is working perfectly, but I can't say the same for the client side. I will add new features when I have time, but you don't have to wait feel free to add them yourself! Fork the project and submit pull requests.
 
 ## To Do
 
-Here is few idea which will be implemented in future, you could open issue for that as well.
+Here are a few ideas that will be implemented in the future. You can also open an issue for any of these ideas.
 
 - Update client side design.
 - Seperate client side from server side:
