@@ -5,7 +5,3 @@ node_modules
 # environment / secrets
 
 .env
-
-# Compiled
-
-index.html
