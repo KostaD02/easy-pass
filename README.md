@@ -6,6 +6,9 @@ There are many great inspirations [vaultwarden](https://www.vaultwarden.net/), [
 > [!TIP]
 > I suggest learning how to set up HTTPS because it's more secure than just using HTTP.
 
+> [!CAUTION]
+> This application is meant to be used only on a local network since it's based on **HTTP**. However, if someone else is on the same network where this application is hosted, they could potentially see the traffic and access the data. **USE AT YOUR OWN RISK**.
+
 ## How does it works?
 
 The client-side sends a request to the server, which will generate a random password. The server will encrypt it using the `aes-256-cbc` algorithm, with `SECRET_PHRASE` and `SECRET_IV` being used for encryption.
