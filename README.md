@@ -1,13 +1,10 @@
 # Easy pass
 
 Easy pass is self-hosting app for password managment.
-There are many great inspirations [vaultwarden](https://www.vaultwarden.net/), [passbolt](https://www.passbolt.com/), [bitwarden](https://bitwarden.com/), and others, but I struggled to self-host them myself due to the complexity of configuring HTTPS. 😂 Because of that, I created **Easy Pass**. The idea is simple: to have a self-hosted password manager without the need for HTTPS configuration, reverse proxies, or similar setups.
-
-> [!TIP]
-> I suggest learning how to set up HTTPS because it's more secure than just using HTTP.
+There are many great inspirations [vaultwarden](https://www.vaultwarden.net/), [passbolt](https://www.passbolt.com/), [bitwarden](https://bitwarden.com/), and others, but I struggled to self-host them myself. Because of that, I created **Easy Pass**. The idea is simple: to have a self-hosted password manager with single command run.
 
 > [!CAUTION]
-> This application is meant to be used only on a local network since it's based on **HTTP**. However, if someone else is on the same network where this application is hosted, they could potentially see the traffic and access the data. **USE AT YOUR OWN RISK**.
+> This application is meant to be used only on a local network since it's based on **HTTP** (Currently). However, if someone else is on the same network where this application is hosted, they could potentially see the traffic and access the data. **USE AT YOUR OWN RISK**.
 
 ## How does it works?
 
@@ -122,6 +119,7 @@ Currently, the server-side code is working perfectly, but I can't say the same f
 
 Here are a few ideas that will be implemented in the future. You can also open an issue for any of these ideas.
 
+- Generate SSL on application startup.
 - Update client side design.
 - Seperate client side from server side:
   - Create new PWA application (for better experience).
